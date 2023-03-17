@@ -1,3 +1,7 @@
+--database
+
+create database g2
+
 --Department table
 
 create table department
@@ -31,7 +35,7 @@ create table employee
 (
 e_id int primary key,
 e_name varchar(25) unique,
-designation varchar(25),
+designation varchar(25) default 'Traineer',
 d_id int references department(dep_id),
 mobile1 bigint,
 mobile2 bigint default 9875625272,
@@ -42,16 +46,14 @@ add_id int references address(address_id)
 insert into employee values(1,'jackie','Developer',100,1234567890,0987654321,103,1)
 insert into employee values(2,'Bheema','Designer',101,9087612345,5432109876,106,2)
 insert into employee values(3,'Ben','Developer',100,9612345087,5098764321,102,1)
-insert into employee(e_id,e_name,designation,d_id,mobile1,roomno,add_id) values(5,'Gwen 10','Developer',200,9650871234,104,2)
+insert into employee(e_id,e_name,designation,d_id,mobile1,roomno,add_id) values(4,'Gwen 10','Developer',101,9650871234,104,2)
 
 select * from employee
 
---drop table
-drop table employee
 -----------------------------------------------------------------------------------------------
 
 --drop constraints 
-alter table employee drop constraint FK__employee__d_id__00200768
+alter table employee drop constraint FK__employee__d_id__4F7CD00D
 
 --add constraint (on delete cascade on update cascade)
 alter table employee add constraint FK__employee__d_id foreign key (d_id) references department(dep_id) on delete cascade on update cascade 
@@ -69,36 +71,45 @@ delete from department where dep_id=102
 --drop constraints 
 alter table employee drop constraint FK__employee__d_id
 
---add constraint (on delete cascade on update cascade)
+--add constraint (on delete set null on update set null)
 alter table employee add constraint FK__employee__d_id foreign key (d_id) references department(dep_id) on delete set null on update set null
 
 --add column
-insert into department values (100,'Developer')
+insert into department values (101,'UI/UX')
 
---on update cascade
-update department set dep_id=101 where dep_id=10
+--add column
+insert into employee values(2,'Bheema','Designer',101,9087612345,5432109876,106,2)
+insert into employee(e_id,e_name,designation,d_id,mobile1,roomno,add_id) values(4,'Gwen 10','Developer',101,9650871234,104,2)
+
+
+--on update set null
+update department set dep_id=102 where dep_id=101
 
 select * from department
 select * from employee
 
---on delete cascade
-delete from employee where d_id=200
+--update the null value
+update employee set d_id=102 where e_id=2 or e_id=4
 
-alter table employee drop column d_id
+-- on delete set null
+delete from department where dep_id=102
 
-alter table employee add d_id int constraint FK__employee__d_id foreign key (d_id) references department(dep_id) on delete set null on update set null
+--add column
+insert into department values (101,'UI/UX')
 
-update employee set d_id=101
-
-delete from department where dep_id=101
-
-update employee set d_id=102
-
-update department set dep_id=101
+--update the null value
+update employee set d_id=101 where e_id=2 or e_id=4
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
-update employee set d_id=100
+--drop constraints 
+alter table employee drop constraint FK__employee__d_id
+
+--add constraint (on delete set default on update set default)
+alter table employee add constraint FK__employee__d_id foreign key (d_id) references department(dep_id) on delete set default on update set default
+
+
+
 
 
 
