@@ -105,11 +105,29 @@ update employee set d_id=101 where e_id=2 or e_id=4
 --drop constraints 
 alter table employee drop constraint FK__employee__d_id
 
+--drop column
+alter table employee drop column d_id
+
 --add constraint (on delete set default on update set default)
-alter table employee add constraint FK__employee__d_id foreign key (d_id) references department(dep_id) on delete set default on update set default
+alter table employee add d_id int default 100 constraint FK__employee__d_id foreign key(d_id) references department(dep_id) on delete set default on update set default
 
+select * from department
+select * from employee
 
+--on update set default
+update department set dep_id=102 where dep_id=101
 
+--update the d_id values
+update employee set d_id=102
 
+--on update set default
+update department set dep_id=101 where dep_id=102
 
+--update the d_id values
+update employee set d_id=101
 
+--on delete set default
+delete from department where dep_id=101
+
+select * from department
+select * from employee
