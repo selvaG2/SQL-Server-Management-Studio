@@ -85,7 +85,7 @@ SELECT SUBSTRING (FIRST_NAME,1,3) AS FIRST_NAME from Worker
 
 -- 5)  SQL query that fetches the unique values of DEPARTMENT from Worker table and prints its length.
 
-SELECT DISTINCT LEN(DEPARTMENT) AS LENGTH FROM Worker
+SELECT DISTINCT DEPARTMENT, LEN(DEPARTMENT) AS LENGTH FROM Worker
 
 -- 6) SQL query to print the FIRST_NAME and LAST_NAME from Worker table into a single column COMPLETE_NAME. A space char should separate them.
 
