@@ -95,6 +95,9 @@ SELECT CONCAT(FIRST_NAME, ' ' , LAST_NAME) AS FULL_NAME FROM Worker
 
 SELECT * FROM Worker WHERE FIRST_NAME='Vipul' or FIRST_NAME='Satish'
 
+-- ANOTHER METHOD
+SELECT * FROM Worker WHERE FIRST_NAME IN ('Vipul','Satish')
+
 -- 8) an SQL query to print details of Workers with DEPARTMENT name as “Admin”
 
 SELECT * FROM Worker WHERE DEPARTMENT = 'Admin'
