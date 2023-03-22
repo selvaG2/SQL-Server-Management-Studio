@@ -1,0 +1,101 @@
+create database task6
+
+use task6
+
+--salesman table
+CREATE TABLE SALESMAN
+(
+SALESMAN_ID INT PRIMARY KEY,
+NAME VARCHAR(25) UNIQUE,
+CITY VARCHAR(20),
+COMMISSION FLOAT
+)
+
+INSERT INTO SALESMAN VALUES(5001,'James Hoog','New York',0.15),(5002,'Nail Knite','Paris',0.13),(5005,'Pit Alex','London',0.11),
+(5006,'Mc Lyon','Paris',0.14),(5007,'Paul Adam','Rome',0.13),(5003,'Lauson Hen','San Jose',0.12)
+
+
+--CUSTOMER TABLE
+
+CREATE TABLE CUSTOMER
+(
+CUST_ID INT PRIMARY KEY,
+CUST_NAME VARCHAR(25),
+CITY VARCHAR(20),
+GRADE INT,
+SALESMAN_ID INT
+)
+
+
+INSERT INTO CUSTOMER VALUES(3002,'Nick Rimando','New York',100,5001),(3007,'Brad Davis','New York',100,5001),
+(3005,'Graham Zusi','California',200,5002),(3008,'Julian Green','London',300,5002),
+(3004,'Fabian Johnson','Paris',300,5006),(3009,'Geoff Cameron','Berlin',100,5003),
+(3003,'Jozy Altidor','Moscow',200,5007)
+
+INSERT INTO CUSTOMER(CUST_ID,CUST_NAME,CITY,SALESMAN_ID) VALUES(3001,'Brad Guzan','London',5005)
+
+
+SELECT * FROM SALESMAN
+SELECT * FROM CUSTOMER
+
+--ORDER TABLE
+CREATE TABLE ORDERS
+(
+ORD_NO INT PRIMARY KEY,
+PURCH_AMT FLOAT,
+ORD_DATE DATE,
+CUSTOMER_ID INT,
+SALESMAN_ID INT
+)
+
+
+
+INSERT INTO ORDERS VALUES(70001,150.5,'2012-10-05',3005,5002),(70009,270.65,'2012-09-10',3001,5005),(70002,65.26,'2012-10-05',3002,5001),(70004,110.5,'2012-08-17',3009,5003),
+(70007,948.5,'2012-09-10',3005,5002),(70005,2400.6,'2012-07-27',3007,5001),(70008,5760,'2012-09-10',3002,5001),(70010,1983.43,'2012-10-10',3004,5006),
+(70003,2480.4,'2012-10-10',3009,5003),(70012,250.45,'2012-06-27',3008,5002),(70011,75.29,'2012-08-17',3003,5007),(70013,3045.6,'2012-04-25',3002,5001)
+
+
+SELECT * FROM ORDERS
+
+--1) SQL query to find the salesperson and customer who reside in the same city. Return Salesman, cust_name and city.
+
+SELECT SM.SALESMAN_ID,SM.NAME AS 'SALES MAN',SM.COMMISSION,SM.CITY, C.CUST_NAME AS 'CUSTOMER',C.CITY 
+FROM SALESMAN AS SM
+INNER JOIN
+CUSTOMER AS C
+ON SM.CITY = C.CITY
+
+--2) a SQL query to find salespeople who received commissions of more than 12 percent from the company. Return Customer Name, customer city, Salesman, commission.
+
+SELECT C.CUST_NAME AS 'CUSTOMER NAME',C.CITY,SM.NAME AS 'SALES MAN',SM.COMMISSION
+FROM SALESMAN AS SM
+INNER JOIN
+CUSTOMER AS C
+ON SM.COMMISSION>0.12 AND SM.SALESMAN_ID = C.SALESMAN_ID
+
+--3) SQL query to find the details of an order. Return ord_no, ord_date, purch_amt, Customer Name, grade, Salesman, commission.
+
+SELECT ORD_NO,ORD_DATE,PURCH_AMT,CUST_NAME,GRADE,NAME AS 'SALES MAN NAME',COMMISSION
+FROM ORDERS AS O
+INNER JOIN
+CUSTOMER AS C
+ON O.CUSTOMER_ID=C.CUST_ID
+INNER JOIN
+SALESMAN AS S
+ON C.SALESMAN_ID=S.SALESMAN_ID
+
+--4) a SQL query to find those orders where the order amount exists between 500 and 2000. Return ord_no, purch_amt, cust_name, city.
+
+SELECT ORD_NO,PURCH_AMT,CUST_NAME,CITY
+FROM ORDERS AS O
+INNER JOIN
+CUSTOMER AS C
+ON O.PURCH_AMT BETWEEN 500 AND 2000 AND O.CUSTOMER_ID = C.CUST_ID
+
+-- 5) a SQL query to display the customer name, customer city, grade, salesman, salesman city. The results should be sorted by ascending customer_id.
+
+SELECT C.CUST_NAME,C.CITY,C.GRADE,S.NAME AS 'SALES MAN',S.CITY,C.CUST_ID
+FROM CUSTOMER AS C
+INNER JOIN
+SALESMAN AS S
+ON C.SALESMAN_ID=S.SALESMAN_ID ORDER BY C.CUST_ID
