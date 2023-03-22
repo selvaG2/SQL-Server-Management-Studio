@@ -40,7 +40,7 @@ SELECT TRAINEE_ID,FIRST_NAME AS 'NAME', CHOOSE(MONTH([JOINING_DATE]),'January','
 SELECT COALESCE(DEPARTMENT, 'ALL DEPARTMENT`S TOTAL') AS DEPARTMENT, SUM(SALARY) AS TOTALSALARY
 FROM Trainees GROUP BY ROLLUP (DEPARTMENT);
 
--- 5) SQL query to perform the total and subtotal of salary in each department
+-- 5) SQL query to perform top 3 records randomly
 
 SELECT TOP 3 * FROM Trainees ORDER BY NEWID()
 
