@@ -68,3 +68,5 @@ WHERE FIRST_NAME = (SELECT FIRST_NAME FROM employees WHERE FIRST_NAME = 'Yamini'
 SELECT * FROM
 employees 
 WHERE SALARY BETWEEN (SELECT MIN(SALARY) FROM employees) and 25000 -- insted of 2500 i used 25000 just to see the working bcoz i dont have salary below 10000
+
+SELECT * FROM employees
